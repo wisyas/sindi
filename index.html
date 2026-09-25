@@ -1318,12 +1318,12 @@ button:focus-visible {
 }
 
 /* Large card spanning both columns */
-.media-card.large {
+.about-visual-collage .media-card.large {
   grid-column: 1 / -1;
   height: 360px;
 }
 
-.media-card {
+.about-visual-collage .media-card {
   position: relative;
   overflow: hidden;
   border-radius: 14px;
@@ -1331,8 +1331,8 @@ button:focus-visible {
 }
 
 /* Images and videos fill the card */
-.media-card img,
-.media-card video {
+.about-visual-collage .media-card img,
+.about-visual-collage .media-card video {
   width: 100%;
   height: 100%;
   display: block;
@@ -1340,7 +1340,7 @@ button:focus-visible {
 }
 
 /* Dark gradient over media */
-.media-card::after {
+.about-visual-collage .media-card::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1353,7 +1353,7 @@ button:focus-visible {
 }
 
 /* Text */
-.media-overlay {
+.about-visual-collage .media-overlay {
   position: absolute;
   z-index: 2;
   bottom: 25px;
@@ -1361,25 +1361,25 @@ button:focus-visible {
   color: white;
 }
 
-.media-overlay strong {
+.about-visual-collage .media-overlay strong {
   display: block;
   font-size: 28px;
   font-weight: 600;
 }
 
-.media-overlay span {
+.about-visual-collage .media-overlay span {
   font-size: 14px;
   opacity: 0.8;
 }
 
 /* Hover effect */
-.media-card img,
-.media-card video {
+.about-visual-collage .media-card img,
+.about-visual-collage .media-card video {
   transition: transform 0.5s ease;
 }
 
-.media-card:hover img,
-.media-card:hover video {
+.about-visual-collage .media-card:hover img,
+.about-visual-collage .media-card:hover video {
   transform: scale(1.05);
 }
 </style>
@@ -1454,8 +1454,6 @@ button:focus-visible {
     <p class="about-description reveal" style="--d:1">
       SINDI Advertising is a marketing agency from the Philippines which assists brands in developing distinct identities and in establishing enduring links with their intended audiences. Since the word 'sindi' means <strong>'to ignite'</strong>, we believe that excellent campaigns start with a spark. An idea that has the ability to capture attention and produce impact. We offer specialized services in the area of strategic campaign development, creative design, and complete communication solutions that are tailored to enhance your brand.
     </p>
-
-    <div class="about-visual-collage reveal" style="--d:2">
 
   <div class="about-visual-collage reveal" style="--d:2">
 
