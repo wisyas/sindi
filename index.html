@@ -1,537 +1,1538 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SINDI Studio | Ideas That Catch</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0a0a0c;
-      --panel: #111114;
-      --panel-soft: #18181d;
-      --text: #f4f1ea;
-      --muted: #b7afa2;
-      --line: #26262c;
-      --red: #ed1c24;
-      --max: 1160px;
+<style>
+.design-ui-credit {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font: 11px/1 system-ui, sans-serif;
+  color: rgba(128,128,128,0.5);
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+@media (hover: none) {
+  .design-ui-credit { display: none; }
+}
+
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .design-ui-credit { display: none !important; }
+}
+</style>
+<script>
+(function () {
+    function markEditable() {
+        document.body.classList.add('artifact-editable');
+    }
+    function initChromeUI() {
+        if (!matchMedia('(hover: hover)').matches) return;
+
+        var credit = document.createElement('div');
+        credit.className = 'design-ui-credit';
+        credit.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(credit);
+
+        var timer = null;
+        var fade = function (out) { credit.style.opacity = out ? '0' : ''; };
+        fade(true);
+        var show = function () {
+            fade(false);
+            clearTimeout(timer);
+            timer = setTimeout(function () { fade(true); }, 3000);
+        };
+        document.addEventListener('mousemove', show);
+        show();
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: radial-gradient(circle at 70% -20%, rgba(237, 28, 36, 0.22), transparent 38%), var(--bg);
-      color: var(--text);
-      line-height: 1.65;
+    function init() {
+        markEditable();
+        initChromeUI();
     }
 
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; width: 100%; object-fit: cover; }
-
-    .container {
-      width: min(100% - 2.5rem, var(--max));
-      margin-inline: auto;
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SINDI Studio | Ideas That Catch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: oklch(8% 0.01 25);
+  --bg-base: oklch(12% 0.012 25);
+  --bg-elevated: oklch(16% 0.012 25);
+  --bg-hover: oklch(20% 0.012 25);
+  --red: oklch(58% 0.22 28);
+  --red-light: oklch(65% 0.18 28);
+  --red-dim: oklch(35% 0.1 28);
+  --red-glow: oklch(50% 0.25 28 / 0.25);
+  --warm-surface: oklch(13% 0.025 50);
+  --text-primary: oklch(92% 0.006 50);
+  --text-secondary: oklch(62% 0.008 40);
+  --text-tertiary: oklch(42% 0.006 30);
+  --border-subtle: oklch(22% 0.01 25);
+  --display: 'Cormorant', Georgia, serif;
+  --body: 'DM Sans', system-ui, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  --section-pad: clamp(80px, 12vw, 140px);
+}
 
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(10, 10, 12, 0.84);
-      backdrop-filter: blur(10px);
-    }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 76px;
-    }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
 
-    .brand {
-      font: 700 1.6rem/1 'Cormorant', Georgia, serif;
-      letter-spacing: .04em;
-    }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-    .brand .accent,
-    .section-eyebrow {
-      color: var(--red);
-    }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
 
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1.8rem;
-      font-size: .85rem;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      color: var(--muted);
-    }
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
 
-    .nav-links a:hover,
-    .nav-links a:focus-visible { color: var(--text); }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
 
-    .hero {
-      min-height: calc(100vh - 76px);
-      display: grid;
-      align-items: center;
-      padding: 6rem 0 4.5rem;
-    }
+html {
+  scroll-behavior: smooth;
+  font-optical-sizing: auto;
+}
 
-    .hero-grid {
-      display: grid;
-      gap: 3rem;
-      align-items: center;
-      grid-template-columns: 1.1fr .9fr;
-    }
+body {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.65;
+  letter-spacing: 0.012em;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+  
+  background: linear-gradient(-45deg, var(--bg-deep), oklch(12% 0.02 25), oklch(15% 0.05 28), var(--bg-deep));
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  background-attachment: fixed;
+}
 
-    .hero-logo { max-width: 620px; }
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    .hero-copy h1 {
-      font: 700 clamp(2.4rem, 6vw, 4.6rem)/.95 'Cormorant', Georgia, serif;
-      letter-spacing: .01em;
-      margin-bottom: 1.2rem;
-    }
+h1, h2, h3, h4 { text-wrap: balance; }
+p { text-wrap: pretty; }
 
-    .hero-copy p {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 38ch;
-    }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-    .hero-kicker {
-      margin-top: 1.2rem;
-      text-transform: uppercase;
-      font-size: .76rem;
-      letter-spacing: .16em;
-      color: #d7c8ad;
-    }
+img { display: block; max-width: 100%; }
 
-    section { padding: 5rem 0; }
+/* ---------- DENSE HERO EMBERS EFFECT ---------- */
+.embers-wrapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
 
-    .section-head {
-      margin-bottom: 2rem;
-    }
+.ember {
+  position: absolute;
+  bottom: -15px;
+  width: 4px;
+  height: 4px;
+  background: var(--red-light);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--red), 0 0 14px #f26f21;
+  animation: floatUp linear infinite;
+}
 
-    .section-eyebrow {
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      font-size: .74rem;
-      margin-bottom: .5rem;
-      font-weight: 600;
-    }
+.ember:nth-child(1)  { left: 5%;  width: 3px; height: 3px; animation-duration: 4s;   animation-delay: 0s;   }
+.ember:nth-child(2)  { left: 12%; width: 5px; height: 5px; animation-duration: 5.5s; animation-delay: 1.2s; }
+.ember:nth-child(3)  { left: 20%; width: 2px; height: 2px; animation-duration: 3.5s; animation-delay: 0.4s; }
+.ember:nth-child(4)  { left: 28%; width: 4px; height: 4px; animation-duration: 4.8s; animation-delay: 2.1s; }
+.ember:nth-child(5)  { left: 35%; width: 3px; height: 3px; animation-duration: 6s;   animation-delay: 0.8s; }
+.ember:nth-child(6)  { left: 42%; width: 5px; height: 5px; animation-duration: 4.2s; animation-delay: 1.7s; }
+.ember:nth-child(7)  { left: 48%; width: 2px; height: 2px; animation-duration: 3.2s; animation-delay: 0.2s; }
+.ember:nth-child(8)  { left: 55%; width: 4px; height: 4px; animation-duration: 5s;   animation-delay: 2.5s; }
+.ember:nth-child(9)  { left: 62%; width: 3px; height: 3px; animation-duration: 4.5s; animation-delay: 0.6s; }
+.ember:nth-child(10) { left: 68%; width: 5px; height: 5px; animation-duration: 5.8s; animation-delay: 1.9s; }
+.ember:nth-child(11) { left: 74%; width: 2px; height: 2px; animation-duration: 3.8s; animation-delay: 0.1s; }
+.ember:nth-child(12) { left: 80%; width: 4px; height: 4px; animation-duration: 4.6s; animation-delay: 1.4s; }
+.ember:nth-child(13) { left: 86%; width: 3px; height: 3px; animation-duration: 5.2s; animation-delay: 2.8s; }
+.ember:nth-child(14) { left: 92%; width: 5px; height: 5px; animation-duration: 4s;   animation-delay: 0.9s; }
+.ember:nth-child(15) { left: 15%; width: 4px; height: 4px; animation-duration: 3.6s; animation-delay: 2.3s; }
+.ember:nth-child(16) { left: 30%; width: 2px; height: 2px; animation-duration: 4.9s; animation-delay: 1.1s; }
+.ember:nth-child(17) { left: 50%; width: 4px; height: 4px; animation-duration: 3.4s; animation-delay: 2.9s; }
+.ember:nth-child(18) { left: 65%; width: 3px; height: 3px; animation-duration: 5.6s; animation-delay: 0.3s; }
+.ember:nth-child(19) { left: 78%; width: 5px; height: 5px; animation-duration: 4.1s; animation-delay: 1.6s; }
+.ember:nth-child(20) { left: 90%; width: 2px; height: 2px; animation-duration: 3.9s; animation-delay: 2.0s; }
 
-    .section-title {
-      font: 700 clamp(2rem, 5vw, 3.6rem)/1 'Cormorant', Georgia, serif;
-      margin-bottom: .7rem;
-    }
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-105vh) scale(0.2);
+    opacity: 0;
+  }
+}
 
-    .section-lead {
-      color: var(--muted);
-      max-width: 72ch;
-    }
+/* ---------- FLAME PULSE & GLOW ON HOVER ---------- */
+.flame-hover-card {
+  transition: transform 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo) !important;
+}
 
-    .stats,
-    .timeline {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      margin-top: 2rem;
-    }
+.flame-hover-card:hover {
+  border-color: var(--red) !important;
+  box-shadow: 
+    0 0 15px rgba(237, 28, 36, 0.4),
+    0 0 30px rgba(242, 111, 33, 0.25),
+    inset 0 0 15px rgba(237, 28, 36, 0.15);
+  animation: flamePulse 1.5s infinite alternate ease-in-out;
+}
 
-    .card {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, #14141a, #0f1014);
-      border-radius: 14px;
-      padding: 1.3rem;
-    }
+@keyframes flamePulse {
+  0% {
+    box-shadow: 
+      0 0 15px rgba(237, 28, 36, 0.4),
+      0 0 30px rgba(242, 111, 33, 0.25),
+      inset 0 0 15px rgba(237, 28, 36, 0.15);
+  }
+  100% {
+    box-shadow: 
+      0 0 25px rgba(237, 28, 36, 0.7),
+      0 0 45px rgba(242, 111, 33, 0.4),
+      inset 0 0 20px rgba(237, 28, 36, 0.25);
+  }
+}
 
-    .card h3 {
-      font: 600 1.2rem/1.1 'Cormorant', Georgia, serif;
-      margin-bottom: .4rem;
-    }
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) clamp(var(--space-lg), 5vw, var(--space-3xl));
+  transition: background 0.4s var(--ease-out-expo), padding 0.4s var(--ease-out-expo);
+}
 
-    .card p { color: var(--muted); font-size: .95rem; }
+.nav.scrolled {
+  background: oklch(8% 0.01 25 / 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-md);
+}
 
-    .stat-number {
-      font: 700 2.2rem/1 'Cormorant', Georgia, serif;
-      margin-bottom: .3rem;
-    }
+.nav-logo {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
 
-    .identity-grid {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    }
+.nav-logo .s-char { color: var(--red); }
 
-    .work-stack {
-      display: grid;
-      gap: 1rem;
-    }
+.nav-links {
+  display: flex;
+  gap: var(--space-xl);
+  list-style: none;
+}
 
-    .work-item {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 1.2rem;
-      background: var(--panel);
-    }
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  position: relative;
+  transition: color 0.3s var(--ease-out-expo);
+}
 
-    .work-year {
-      color: #efb2b2;
-      font-size: .77rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      margin-bottom: .5rem;
-    }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0;
+  height: 1.5px;
+  background: var(--red);
+  transition: width 0.4s var(--ease-out-expo);
+}
 
-    .work-item h3 {
-      font: 600 1.5rem/1.15 'Cormorant', Georgia, serif;
-      margin-bottom: .7rem;
-    }
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--text-primary);
+}
 
-    .work-item p { color: var(--muted); }
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after {
+  width: 100%;
+}
 
-    .awards-grid {
-      display: grid;
-      gap: .85rem;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-sm);
+  z-index: 300;
+}
 
-    .award {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
-      background: var(--panel-soft);
-      aspect-ratio: 1;
-    }
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--text-primary);
+  transition: transform 0.3s var(--ease-out-expo), opacity 0.2s;
+  transform-origin: center;
+}
 
-    .luna-grid {
-      display: grid;
-      gap: .9rem;
-      grid-template-columns: 1.2fr 1fr;
-    }
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-    .luna-right {
-      display: grid;
-      gap: .9rem;
-      grid-template-columns: repeat(2, 1fr);
-    }
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: oklch(6% 0.01 25 / 0.97);
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xl);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-out-expo);
+}
 
-    .tile {
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      overflow: hidden;
-      background: var(--panel-soft);
-      position: relative;
-      min-height: 200px;
-    }
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
 
-    .tile.tall { min-height: 100%; }
+.mobile-menu a {
+  font-family: var(--display);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.3s var(--ease-out-expo);
+}
 
-    .tile-label {
-      position: absolute;
-      top: .75rem;
-      left: .75rem;
-      z-index: 2;
-      font-size: .7rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      background: rgba(0, 0, 0, 0.52);
-      padding: .3rem .55rem;
-      border-radius: 999px;
-    }
+.mobile-menu a:hover { color: var(--red); }
 
-    .tile-text {
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: var(--panel);
-      padding: 1.2rem;
-      color: var(--muted);
-      font-size: .95rem;
-      grid-column: span 2;
-    }
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4xl) clamp(var(--space-lg), 5vw, var(--space-3xl));
+  overflow: hidden;
+}
 
-    .contact {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(180deg, #111117, #0d0d11);
-    }
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  width: min(700px, 90vw);
+  height: min(700px, 90vw);
+  background: radial-gradient(circle, var(--red-glow) 0%, oklch(30% 0.08 28 / 0.08) 40%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  animation: glow-pulse 6s ease-in-out infinite alternate;
+}
 
-    .contact-grid {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      margin-top: 1.5rem;
-    }
+@keyframes glow-pulse {
+  0% { opacity: 0.6; transform: translate(-50%, -55%) scale(1); }
+  100% { opacity: 1; transform: translate(-50%, -55%) scale(1.08); }
+}
 
-    .contact a { color: #ffd0d2; }
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
 
-    .footer {
-      padding: 2rem 0 3rem;
-      color: #b9af9d;
-      font-size: .9rem;
-    }
+.hero-sub {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-top: var(--space-lg);
+}
 
-    .footer-main {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: .7rem;
-    }
+.hero-tagline {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.125rem, 2.5vw, 1.625rem);
+  color: var(--text-secondary);
+  margin-top: var(--space-2xl);
+}
 
-    .team {
-      columns: 2;
-      column-gap: 1.6rem;
-      color: #c9bba7;
-      font-size: .88rem;
-    }
+.hero-scroll {
+  position: absolute;
+  bottom: var(--space-2xl);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: hero-enter 0.8s var(--ease-out-expo) 0.9s both;
+}
 
-    @media (max-width: 980px) {
-      .hero-grid,
-      .luna-grid { grid-template-columns: 1fr; }
+.hero-scroll svg {
+  width: 16px;
+  height: 16px;
+  animation: bounce-down 2s var(--ease-out-quart) infinite;
+}
 
-      .hero { min-height: auto; padding-top: 4.8rem; }
-      .hero-logo { max-width: 420px; }
-    }
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
 
-    @media (max-width: 760px) {
-      .nav-inner { min-height: 66px; }
-      .nav-links { gap: .9rem; font-size: .72rem; letter-spacing: .08em; }
-      section { padding: 3.6rem 0; }
-      .luna-right { grid-template-columns: 1fr; }
-      .tile-text { grid-column: auto; }
-      .team { columns: 1; }
-    }
-  </style>
+.hero-sub { animation: hero-enter 0.7s var(--ease-out-expo) 0.25s both; }
+.hero-tagline { animation: hero-enter 0.7s var(--ease-out-expo) 0.4s both; }
+
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section {
+  padding: var(--section-pad) clamp(var(--space-lg), 5vw, var(--space-3xl));
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: var(--space-2xl);
+}
+
+.section-heading {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.about { background: var(--bg-deep); }
+
+.about-description {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.55;
+  color: var(--text-primary);
+  max-width: 52ch;
+  margin-bottom: var(--space-4xl);
+}
+
+.about-description strong {
+  font-weight: 600;
+  color: var(--red-light);
+}
+
+.vm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+}
+
+.vm-number {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+  background: linear-gradient(180deg, #f26f21 0%, #ed1c24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.vm-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: var(--space-lg);
+}
+
+.vm-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 48ch;
+}
+
+/* ---------- HORIZONTAL SCROLL TRACK STYLES ---------- */
+.horizontal-scroll-section {
+  position: relative;
+  height: 400vh;
+  background: transparent;
+}
+
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.horizontal-track {
+  display: flex;
+  height: 100%;
+  width: 400vw;
+  will-change: transform;
+}
+
+.horizontal-panel {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(var(--space-xl), 5vw, var(--space-4xl));
+  padding-top: calc(var(--space-4xl) + 40px);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.horizontal-panel .section-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto 0;
+}
+
+.horizontal-panel .identity-item {
+  padding: var(--space-md) 0;
+}
+.horizontal-panel .section-label {
+  margin-bottom: var(--space-md);
+}
+.horizontal-panel .section-heading {
+  margin-bottom: var(--space-md);
+}
+
+.identity {
+  background: linear-gradient(135deg, rgba(237, 28, 36, 0.1) 0%, oklch(10% 0.012 25 / 0.7) 100%);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.identity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.identity-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-xl) var(--space-2xl);
+  align-items: start;
+  padding: var(--space-2xl) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.identity-item:first-child { padding-top: 0; }
+.identity-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+.id-number {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--text-tertiary);
+  padding-top: 2px;
+}
+
+.id-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.id-text {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 52ch;
+}
+
+.id-visual {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+
+.color-swatches {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.swatch {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.swatch--black { background: oklch(10% 0.012 25); }
+.swatch--red { background: var(--red); border-color: var(--red); }
+
+.type-specimen {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--text-tertiary);
+  user-select: none;
+}
+
+.symbol-mark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  user-select: none;
+}
+
+.symbol-mark .lit { color: var(--red); }
+
+.work {
+  background: linear-gradient(to bottom, transparent 0%, oklch(8% 0.01 25 / 0.85) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.work::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: min(600px, 60vw);
+  height: 100%;
+  background: radial-gradient(ellipse at top right, oklch(20% 0.04 50 / 0.5) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.work-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.work-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-lg);
+}
+
+.work-campaign {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.work-campaign .times {
+  color: var(--red);
+  font-weight: 400;
+  margin: 0 0.15em;
+}
+
+.work-description {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 58ch;
+}
+
+/* ---------- AWARDS SECTION ---------- */
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .awards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .awards-grid {
+    grid-template-columns: repeat(5, 1fr); 
+  }
+}
+
+.award-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  min-height: 160px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: oklch(12% 0.012 25 / 0.5);
+  cursor: pointer;
+}
+
+.award-item img {
+  max-width: 100%;
+  max-height: 110px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------- LUNA COFFEE CAMPAIGN GRID ---------- */
+.hollow-title {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--red);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: var(--space-2xl);
+  letter-spacing: 0.02em;
+  filter: drop-shadow(0px 0px 10px rgba(237, 28, 36, 0.4));
+}
+
+.luna-main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+.luna-right-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 1024px) {
+  .luna-main-grid {
+    grid-template-columns: 320px 1fr;
+  }
+  .luna-right-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+  }
+  .luna-billboard { grid-column: 1 / 3; }
+  .luna-about-text { grid-column: 3 / 4; padding-left: var(--space-md); }
+  .luna-packaging { grid-column: 1 / 2; }
+  .luna-poster { grid-column: 2 / 3; }
+  .luna-social { grid-column: 3 / 4; }
+}
+
+.luna-img-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.luna-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.luna-label {
+  font-size: 0.65rem;
+  color: var(--red-light);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+}
+
+.luna-small-heading {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.luna-about-text p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.cta-section {
+  padding: var(--section-pad) clamp(var(--space-lg), 5vw, var(--space-3xl));
+  text-align: center;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(242, 111, 33, 0.1) 0%, oklch(10% 0.012 25 / 0.8) 100%);
+  backdrop-filter: blur(8px);
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--border-subtle), transparent);
+}
+
+.cta-heading {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.cta-heading .accent { color: var(--red); }
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--red);
+  border: none;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+}
+
+.cta-button:hover {
+  background: var(--red-light);
+  transform: translateY(-2px);
+}
+
+.cta-button:active {
+  transform: translateY(0);
+}
+
+.cta-button:focus-visible {
+  outline: 2px solid var(--red-light);
+  outline-offset: 3px;
+}
+
+.footer {
+  padding: var(--space-3xl) clamp(var(--space-lg), 5vw, var(--space-3xl));
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.footer-brand .s-char { color: var(--red); }
+
+.footer-tagline-small {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.footer-team-heading {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-md);
+}
+
+.footer-team-list {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.footer-team-list .role {
+  color: var(--text-tertiary);
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: var(--space-2xl) auto 0;
+  padding-top: var(--space-lg);
+  border-top: 1px solid oklch(16% 0.008 25);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease-out-expo) calc(var(--d, 0) * 120ms),
+    transform 0.7s var(--ease-out-expo) calc(var(--d, 0) * 120ms);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .identity-item {
+    grid-template-columns: auto 1fr;
+  }
+  .id-visual {
+    grid-column: 2;
+    margin-top: calc(-1 * var(--space-sm));
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .vm-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .horizontal-scroll-section {
+    height: auto;
+  }
+  .sticky-wrapper {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+  .horizontal-track {
+    flex-direction: column;
+    width: 100%;
+    transform: none !important;
+  }
+  .horizontal-panel {
+    width: 100%;
+    height: auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .identity-item {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding: var(--space-2xl) 0;
+  }
+
+  .id-number { font-size: 0.875rem; }
+  .id-visual { grid-column: 1; }
+
+  .footer-inner { flex-direction: column; }
+  .footer-bottom { flex-direction: column; gap: var(--space-sm); }
+  .cta-heading { font-size: clamp(2rem, 9vw, 3.5rem); }
+}
+
+@media (max-width: 480px) {
+  .hero, .section, .cta-section {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+  .type-specimen { font-size: 2.5rem; }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+</style>
 </head>
 <body>
-  <nav class="nav" aria-label="Main navigation">
-    <div class="container nav-inner">
-      <a href="#hero" class="brand"><span class="accent">S</span>indi Studio</a>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#identity">Identity</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
 
-  <header class="hero" id="hero">
-    <div class="container hero-grid">
-      <img src="SINDI LOGO.png" alt="SINDI Studio logo" class="hero-logo">
-      <div class="hero-copy">
-        <h1>Ideas That Catch</h1>
-        <p>SINDI Advertising is a Philippine marketing agency building strong brand identities through strategy, storytelling, and integrated campaigns.</p>
-        <p class="hero-kicker">Studio • Strategy • Creative Direction</p>
-      </div>
-    </div>
-  </header>
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo"><span class="s-char">S</span>indi Studio</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#identity">Identity</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <section id="about">
-    <div class="container">
-      <div class="section-head">
-        <p class="section-eyebrow">About</p>
-        <h2 class="section-title">A creative agency built to ignite attention.</h2>
-        <p class="section-lead">Since “sindi” means “to ignite,” our focus is creating campaigns that spark interest and convert into impact across digital and traditional channels.</p>
-      </div>
+<div class="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="#about">About</a>
+  <a href="#identity">Identity</a>
+  <a href="#work">Work</a>
+  <a href="#contact">Contact</a>
+</div>
 
-      <div class="timeline">
-        <article class="card">
-          <h3>2018 — Humble Beginning</h3>
-          <p>Started as a five-person creative studio helping local startups tell stronger stories.</p>
-        </article>
-        <article class="card">
-          <h3>2020 — Digital Shift</h3>
-          <p>Guided SMEs into digital-first communication with message systems designed for growth.</p>
-        </article>
-        <article class="card">
-          <h3>2022 — Full-Service Scale</h3>
-          <p>Expanded to strategy, media planning, analytics, and multimedia production.</p>
-        </article>
-        <article class="card">
-          <h3>2026 — Continual Impact</h3>
-          <p>Turning bold ideas into measurable campaigns for brands across the Philippines.</p>
-        </article>
-      </div>
+<section class="hero" id="hero">
+  <!-- DENSE FLOATING EMBERS (HERO ONLY) -->
+  <div class="embers-wrapper">
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+  </div>
 
-      <div class="stats">
-        <article class="card">
-          <p class="stat-number">8+</p>
-          <p>Years of Excellence</p>
-        </article>
-        <article class="card">
-          <p class="stat-number">120+</p>
-          <p>Successful Campaigns</p>
-        </article>
-        <article class="card">
-          <p class="stat-number">45+</p>
-          <p>Brands &amp; Partners</p>
-        </article>
-        <article class="card">
-          <p class="stat-number">1M+</p>
-          <p>Media Impressions</p>
-        </article>
-      </div>
-    </div>
-  </section>
+  <div class="hero-content">
+    <img src="SINDI LOGO.png" alt="SINDI" class="hero-brand-image" style="width: 100%; max-width: 700px; margin: 0 auto; display: block; mix-blend-mode: screen;">
+    <h1 class="visually-hidden" style="display: none;">SINDI</h1>
+    <div class="hero-sub">Studio</div>
+    <p class="hero-tagline">Ideas That Catch</p>
+  </div>
+  <a href="#about" class="hero-scroll" aria-label="Scroll to learn more">
+    <span>Explore</span>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3v10M4 9l4 4 4-4"/>
+    </svg>
+  </a>
+</section>
 
-  <section id="identity">
-    <div class="container">
-      <div class="section-head">
-        <p class="section-eyebrow">Identity</p>
-        <h2 class="section-title">The DNA behind every campaign.</h2>
-      </div>
-      <div class="identity-grid">
-        <article class="card">
-          <h3>Color System</h3>
-          <p>Deep black for focus and red for movement—representing clarity, urgency, and creative spark.</p>
-        </article>
-        <article class="card">
-          <h3>Typography</h3>
-          <p>Classic serif accents paired with modern body text for premium and readable communication.</p>
-        </article>
-        <article class="card">
-          <h3>Symbolism</h3>
-          <p>The flame-inspired “S” and torch-like “I” stand for ignition, momentum, and transformation.</p>
-        </article>
-      </div>
-    </div>
-  </section>
+<section class="section about" id="about">
+  <div class="section-inner">
+    <div class="section-label reveal">About Our Company</div>
 
-  <section id="work">
-    <div class="container">
-      <div class="section-head">
-        <p class="section-eyebrow">Featured Milestones</p>
-        <h2 class="section-title">Strategic ideas that moved audiences.</h2>
+    <p class="about-description reveal" style="--d:1">
+      SINDI Advertising is a marketing agency from the Philippines which assists brands in developing distinct identities and in establishing enduring links with their intended audiences. Since the word 'sindi' means <strong>'to ignite'</strong>, we believe that excellent campaigns start with a spark. An idea that has the ability to capture attention and produce impact. We offer specialized services in the area of strategic campaign development, creative design, and complete communication solutions that are tailored to enhance your brand.
+    </p>
+
+    <div class="section-label reveal" style="margin-top: var(--space-4xl);">Our Story</div>
+    <div class="vm-grid" style="margin-bottom: var(--space-4xl);">
+      <div class="vm-item reveal" style="--d:2">
+        <div class="vm-number">2018</div>
+        <div class="vm-title">The Humble Beginning</div>
+        <p class="vm-text">
+          SINDI was founded in a humble studio by a small, passionate team of five Filipino creatives. Bound by a shared conviction that local storytelling could compete on a global scale, we began taking on small creative projects for local startup brands.
+        </p>
       </div>
-      <div class="work-stack">
-        <article class="work-item">
-          <p class="work-year">2025 Initiative</p>
-          <h3>Lokal Loud</h3>
-          <p>Multi-channel campaign spotlighting local craftsmanship through pop-ups, creators, and outdoor media, driving over 5 million video views.</p>
-        </article>
-        <article class="work-item">
-          <p class="work-year">2023 Campaign</p>
-          <h3>Modernization × Rebranding</h3>
-          <p>Repositioned a legacy business for digital audiences, increasing brand recall and sales inquiry volume in the first quarter.</p>
-        </article>
-        <article class="work-item">
-          <p class="work-year">2021 Movement</p>
-          <h3>Project Spark</h3>
-          <p>Culturally resonant Gen Z storytelling campaign that generated 3.2 million organic impressions and significant engagement growth.</p>
-        </article>
+      <div class="vm-item reveal" style="--d:3">
+        <div class="vm-number">2020</div>
+        <div class="vm-title">Resiliency Through Adaptation</div>
+        <p class="vm-text">
+          Amid global uncertainties, the pandemic and etc we helped small to medium enterprises shift into digital-first communication channels, proving that meaningful storytelling can bridge gaps even during challenging times.
+        </p>
+      </div>
+      <div class="vm-item reveal" style="--d:4">
+        <div class="vm-number">2022</div>
+        <div class="vm-title">Scaling the Flame</div>
+        <p class="vm-text">
+          As demand grew, SINDI expanded into a full service creative and strategic agency, bringing on board data analysts, media planners, and multimedia producers.
+        </p>
+      </div>
+      <div class="vm-item reveal" style="--d:5">
+        <div class="vm-number">2026</div>
+        <div class="vm-title">Continual Impact</div>
+        <p class="vm-text">
+          Today, SINDI continues to spark purpose narratives. Eight years in, our passion remains unchanged turning bold ideas into measurable, high-impact movements across digital and traditional spaces.
+        </p>
       </div>
     </div>
-  </section>
 
-  <section id="awards">
-    <div class="container">
-      <div class="section-head">
-        <p class="section-eyebrow">Recognitions</p>
-        <h2 class="section-title">Awards &amp; Accolades</h2>
+    <div class="section-label reveal">By The Numbers</div>
+    <div class="vm-grid">
+      <div class="vm-item reveal" style="--d:2">
+        <div class="vm-number" style="font-size: clamp(2rem, 3.5vw, 3rem);">8+</div>
+        <div class="vm-title">Years of Excellence</div>
       </div>
-      <div class="awards-grid">
-        <figure class="award"><img src="award-1.png" alt="Award 1"></figure>
-        <figure class="award"><img src="award-2.png" alt="Award 2"></figure>
-        <figure class="award"><img src="award-3.png" alt="Award 3"></figure>
-        <figure class="award"><img src="award-4.png" alt="Award 4"></figure>
-        <figure class="award"><img src="award-5.png" alt="Award 5"></figure>
-        <figure class="award"><img src="award-6.png" alt="Award 6"></figure>
-        <figure class="award"><img src="award-7.png" alt="Award 7"></figure>
-        <figure class="award"><img src="award-8.png" alt="Award 8"></figure>
-        <figure class="award"><img src="award-9.png" alt="Award 9"></figure>
-        <figure class="award"><img src="award-10.png" alt="Award 10"></figure>
+      <div class="vm-item reveal" style="--d:3">
+        <div class="vm-number" style="font-size: clamp(2rem, 3.5vw, 3rem);">120+</div>
+        <div class="vm-title">Successful Campaigns</div>
+      </div>
+      <div class="vm-item reveal" style="--d:4">
+        <div class="vm-number" style="font-size: clamp(2rem, 3.5vw, 3rem);">45+</div>
+        <div class="vm-title">Brands & Partners</div>
+      </div>
+      <div class="vm-item reveal" style="--d:5">
+        <div class="vm-number" style="font-size: clamp(2rem, 3.5vw, 3rem);">1M+</div>
+        <div class="vm-title">Media Impressions</div>
       </div>
     </div>
-  </section>
 
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <p class="section-eyebrow">Selected Work</p>
-        <h2 class="section-title">Sindi × Luna Coffee</h2>
-      </div>
+  </div>
+</section>
 
-      <div class="luna-grid">
-        <figure class="tile tall">
-          <span class="tile-label">Campaign Brief</span>
-          <img src="luna-left-panel.jpg" alt="Luna Coffee Brief and Insight">
-        </figure>
+<!-- HORIZONTAL SCROLL SECTION (Identity & Work) -->
+<div class="horizontal-scroll-section" id="story-track">
+  <div class="sticky-wrapper">
+    <div class="horizontal-track">
+      
+      <!-- PANEL 1: IDENTITY -->
+      <section class="horizontal-panel identity" id="identity">
+        <div class="section-inner">
+          <div class="section-label reveal">Our Identity</div>
+          <h2 class="section-heading reveal" style="--d:1">The DNA behind<br>every campaign.</h2>
 
-        <div class="luna-right">
-          <figure class="tile">
-            <span class="tile-label">Billboard</span>
-            <img src="luna-billboard.jpg" alt="Make Today Yours billboard">
-          </figure>
-          <figure class="tile">
-            <span class="tile-label">Packaging</span>
-            <img src="luna-packaging.jpg" alt="Luna Coffee packaging">
-          </figure>
-          <figure class="tile">
-            <span class="tile-label">Poster</span>
-            <img src="luna-poster.jpg" alt="Luna Coffee poster">
-          </figure>
-          <figure class="tile">
-            <span class="tile-label">Social</span>
-            <img src="luna-social.jpg" alt="Luna Coffee Instagram post">
-          </figure>
-          <article class="tile-text">
-            “Make Today’s Yours” positions Luna Coffee as a daily reset: a short pause that helps people regain focus and take control of their day.
-          </article>
+          <div class="identity-list">
+            <div class="identity-item reveal" style="--d:2">
+              <div class="id-number">01</div>
+              <div class="id-content">
+                <h3 class="id-title">Colors</h3>
+                <p class="id-text">Deep black represents the space where ideas begin, while red symbolizes passion, energy, and creativity breaking through the darkness.</p>
+              </div>
+              <div class="id-visual">
+                <div class="color-swatches">
+                  <div class="swatch swatch--black" title="Deep Black"></div>
+                  <div class="swatch swatch--red" title="SINDI Red"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="identity-item reveal" style="--d:3">
+              <div class="id-number">02</div>
+              <div class="id-content">
+                <h3 class="id-title">Typography</h3>
+                <p class="id-text">The serif typeface conveys confidence, character, and professionalism, reflecting SINDI's bold creative identity.</p>
+              </div>
+              <div class="id-visual">
+                <div class="type-specimen">Aa</div>
+              </div>
+            </div>
+
+            <div class="identity-item reveal" style="--d:4">
+              <div class="id-number">03</div>
+              <div class="id-content">
+                <h3 class="id-title">Symbolism</h3>
+                <p class="id-text">The flame-like "S" represents SINDI's identity, while the torch-inspired "I" symbolizes movement, creativity, and the spark that transforms ideas into impact.</p>
+              </div>
+              <div class="id-visual">
+                <div class="symbol-mark"><span class="lit">S</span>IND<span class="lit">I</span></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="section-head">
-        <p class="section-eyebrow">Contact</p>
-        <h2 class="section-title">Let’s make ideas catch.</h2>
-      </div>
-      <div class="contact-grid">
-        <article class="card">
-          <h3>Get in touch</h3>
-          <p><a href="mailto:sindiadvertisingcomp@gmail.com">sindiadvertisingcomp@gmail.com</a></p>
-          <p><a href="tel:09462992133">0946 299 2133</a></p>
-          <p style="margin-top: .8rem;"><a href="https://www.facebook.com/profile.php?id=61594283345168" target="_blank" rel="noreferrer">Facebook Page</a></p>
-          <p><a href="https://www.instagram.com/sindi_advertising?stkn=d3BmZGE1ZmV2ZGhu" target="_blank" rel="noreferrer">@sindi_advertising</a></p>
-        </article>
-        <article class="card">
-          <h3>Office</h3>
-          <p>Uptown Mall, 9th Avenue corner 36th Street, Bonifacio Global City, Taguig City</p>
-          <p style="margin-top: .8rem;">
-            <a href="https://www.google.com/maps/place/?q=place_id:ChIJ85rDqfXIlzMRW3tHTdByy40" target="_blank" rel="noreferrer">Open in Maps</a>
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-main">
-        <div>
-          <strong class="brand" style="font-size:1.2rem;"><span class="accent">S</span>indi Studio</strong>
-          <p>Ideas That Catch</p>
-        </div>
-        <div>
-          <p style="margin-bottom:.5rem; color:#e0d5c3;">Team</p>
-          <p class="team">
-            Gerald Hiteroza, Julian Reinier Godoy, Angela Frolles, May Ganados, Tricia Gayotin, John Lloyd Gonzalo, Elain Goyo, Ariane Joy Guerrero, Alex Justine Hechanova, Sophia Paula Izon
+      <!-- PANEL 2: 2025 MILESTONE -->
+      <section class="horizontal-panel work" id="work">
+        <div class="section-inner work-inner">
+          <div class="section-label reveal">Featured Milestones</div>
+          <div class="work-eyebrow reveal" style="--d:1">2025 Initiative</div>
+          <h2 class="work-campaign reveal" style="--d:2">The "Lokal Loud" Campaign</h2>
+          <p class="work-description reveal" style="--d:3">
+            Led a multi channel campaign highlighting local craftsmanship across various provinces. The initiative combined experiential pop-ups, influencer collaborations, and nationwide outdoor displays, earning media coverage across major news outlets and driving over 5 Million video views.
           </p>
         </div>
-      </div>
-      <p>&copy; 2026 SINDI Studio · Pamantasan ng Lungsod ng Muntinlupa</p>
+      </section>
+
+      <!-- PANEL 3: 2023 MILESTONE -->
+      <section class="horizontal-panel work">
+        <div class="section-inner work-inner">
+          <div class="work-eyebrow reveal" style="--d:1">2023 Campaign</div>
+          <h2 class="work-campaign reveal" style="--d:2">Modernization <span class="times">&times;</span> Rebranding</h2>
+          <p class="work-description reveal" style="--d:3">
+            Partnered with a legacy commercial enterprise transitioning from traditional media to a contemporary digital identity. SINDI revitalized their visual branding and messaging architecture, resulting in a 45% increase in brand recall and a 25% jump in direct sales inquiries within the first quarter post-launch.
+          </p>
+        </div>
+      </section>
+
+      <!-- PANEL 4: 2021 MILESTONE -->
+      <section class="horizontal-panel work">
+        <div class="section-inner work-inner">
+          <div class="work-eyebrow reveal" style="--d:1">2021 Movement</div>
+          <h2 class="work-campaign reveal" style="--d:2">Project Spark</h2>
+          <p class="work-description reveal" style="--d:3">
+            Developed an integrated digital campaign for a home grown Philippine retail brand aiming to reconnect with Gen Z consumers. By leverage culturally resonant video storytelling and targeted social strategies, the campaign generated 3.2 Million organic impressions and boosted client engagement by 140% in under six months.
+          </p>
+        </div>
+      </section>
+
     </div>
-  </footer>
+  </div>
+</div>
+
+<!-- VERTICAL SCROLL: AWARDS SECTION -->
+<section class="section awards" id="awards" style="padding-top: var(--space-4xl);">
+  <div class="section-inner">
+    <div class="section-label reveal">Recognitions</div>
+    <h2 class="section-heading reveal" style="--d:1">Awards & Accolades</h2>
+    
+    <div class="awards-grid reveal" style="--d:2">
+      <div class="award-item flame-hover-card">
+        <img src="award-1.png" alt="Award 1">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-2.png" alt="Award 2">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-3.png" alt="Award 3">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-4.png" alt="Award 4">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-5.png" alt="Award 5">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-6.png" alt="Award 6">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-7.png" alt="Award 7">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-8.png" alt="Award 8">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-9.png" alt="Award 9">
+      </div>
+      <div class="award-item flame-hover-card">
+        <img src="award-10.png" alt="Award 10">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERTICAL SCROLL: LUNA COFFEE CAMPAIGN GRID -->
+<section class="section work" style="padding-top: var(--space-4xl); padding-bottom: var(--space-4xl);">
+  <div class="section-inner">
+    
+    <h2 class="hollow-title reveal">Sindi X Luna Coffee</h2>
+
+    <div class="luna-main-grid reveal" style="--d:1">
+      
+      <!-- LEFT COLUMN: The Brief / Insight Panel -->
+      <div class="luna-img-wrap">
+        <span class="luna-label">Selected Work</span>
+        <img src="luna-left-panel.jpg" alt="Luna Coffee Brief and Insight">
+      </div>
+
+      <!-- RIGHT COLUMN: The Bento Box Grid -->
+      <div class="luna-right-grid">
+        
+        <!-- Top Row -->
+        <div class="luna-img-wrap luna-billboard">
+          <span class="luna-label">Billboard</span>
+          <img src="luna-billboard.jpg" alt="Make Today Yours Billboard">
+        </div>
+        
+        <div class="luna-about-text">
+          <h3 class="luna-small-heading">&bull; About the Campaign</h3>
+          <p>"Make Today's Yours" is a reminder that no matter how busy life gets, you have the power to take control of your day. Luna Coffee is more than just a coffee—it's your moment of pause, your reset, and your daily fuel to go after what matters.</p>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="luna-img-wrap luna-packaging">
+          <span class="luna-label">Packaging</span>
+          <img src="luna-packaging.jpg" alt="Luna Coffee Packaging">
+        </div>
+        
+        <div class="luna-img-wrap luna-poster">
+          <span class="luna-label">Poster</span>
+          <img src="luna-poster.jpg" alt="Luna Coffee Poster">
+        </div>
+        
+        <div class="luna-img-wrap luna-social">
+          <span class="luna-label">Social Media (Instagram Post)</span>
+          <img src="luna-social.jpg" alt="Luna Coffee Instagram Post">
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- CTA / CONTACT SECTION -->
+<section class="cta-section" id="contact">
+  <div class="section-inner">
+    <h2 class="cta-heading reveal">
+      Let's make some<br>ideas <span class="accent">catch.</span>
+    </h2>
+    
+    <div class="vm-grid reveal" style="--d:1; text-align: left; margin-top: var(--space-4xl);">
+      <div class="vm-item">
+        <div class="vm-title">Get In Touch</div>
+        <p class="vm-text" style="margin-bottom: var(--space-md);">
+          <a href="mailto:sindiadvertisingcomp@gmail.com" style="display: block; margin-bottom: 8px;">sindiadvertisingcomp@gmail.com</a>
+          <a href="tel:09462992133" style="display: block;">0946 299 2133</a>
+        </p>
+        
+        <div class="vm-title" style="margin-top: var(--space-2xl);">Social Media</div>
+        <p class="vm-text">
+          <a href="https://www.facebook.com/profile.php?id=61594283345168" target="_blank" style="display: block; margin-bottom: 8px; color: var(--red); font-weight: 500;">Facebook Page</a>
+          <a href="https://www.instagram.com/sindi_advertising?stkn=d3BmZGE1ZmV2ZGhu" target="_blank" style="display: block; color: var(--red); font-weight: 500;">Instagram: @sindi_advertising</a>
+        </p>
+      </div>
+
+      <div class="vm-item">
+        <div class="vm-title">Office Location</div>
+        <p class="vm-text" style="margin-bottom: var(--space-md);">
+          Uptown Mall, 9th Avenue corner 36th Street,<br>
+          Bonifacio Global City (BGC), Taguig City
+        </p>
+        
+        <div class="vm-title" style="margin-top: var(--space-2xl);">How to Find Us</div>
+        <p class="vm-text" style="margin-bottom: var(--space-lg);">
+          Nearby landmarks: Uptown Parade, Mitsukoshi BGC Shopping Center, and St. Luke's Medical Center BGC.
+        </p>
+        
+        <a href="https://www.google.com/maps/place/?q=place_id:ChIJ85rDqfXIlzMRW3tHTdByy40" target="_blank" class="cta-button flame-hover-card">
+          Open in Maps
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><span class="s-char">S</span>indi Studio</div>
+      <div class="footer-tagline-small">Ideas That Catch</div>
+    </div>
+
+    <div class="footer-team">
+      <div class="footer-team-heading">The Team</div>
+      <div class="footer-team-list">
+        Gerald Hiteroza <span class="role">Leader</span><br>
+        Julian Reinier Godoy <span class="role">Asst. Leader</span><br>
+        Angela Frolles<br>
+        May Ganados<br>
+        Tricia Gayotin<br>
+        John Lloyd Gonzalo<br>
+        Elain Goyo<br>
+        Ariane Joy Guerrero<br>
+        Alex. Justine Hechanova<br>
+        Sophia Paula Izon
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 SINDI Studio. A BACOM4B Project.</span>
+    <span>Pamantasan ng Lungsod ng Muntinlupa</span>
+  </div>
+</footer>
+
+<script>
+// --- Hamburger Menu ---
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileLinks = mobileMenu.querySelectorAll('a');
+
+hamburger.addEventListener('click', () => {
+  const isOpen = hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+mobileLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  });
+});
+
+const nav = document.querySelector('.nav');
+
+const onScroll = () => {
+  if (window.scrollY > 60) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+};
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+const reveals = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.12,
+  rootMargin: '0px 0px -40px 0px'
+});
+
+reveals.forEach(el => revealObserver.observe(el));
+
+// --- REAL-TIME ACCURATE HORIZONTAL SCROLL LOGIC ---
+const horizSection = document.querySelector('.horizontal-scroll-section');
+const track = document.querySelector('.horizontal-track');
+
+function updateHorizontalScroll() {
+  if (!horizSection || !track) return;
+  
+  if (window.innerWidth <= 768) {
+    track.style.transform = 'none';
+    return;
+  }
+  
+  const rect = horizSection.getBoundingClientRect();
+  const maxScroll = horizSection.offsetHeight - window.innerHeight;
+  
+  const currentScroll = -rect.top;
+  let progress = currentScroll / maxScroll;
+  progress = Math.max(0, Math.min(1, progress));
+  
+  const maxTranslate = track.scrollWidth - window.innerWidth;
+  track.style.transform = `translate3d(-${progress * maxTranslate}px, 0, 0)`;
+}
+
+window.addEventListener('scroll', updateHorizontalScroll, { passive: true });
+window.addEventListener('resize', updateHorizontalScroll);
+updateHorizontalScroll();
+</script>
+</body>
+</html>
 </body>
 </html>
