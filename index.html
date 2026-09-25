@@ -866,6 +866,88 @@ img { display: block; max-width: 100%; }
   line-height: 1.7;
 }
 
+.team {
+  background: linear-gradient(180deg, oklch(9% 0.012 25 / 0.85) 0%, oklch(11% 0.016 28 / 0.9) 100%);
+}
+
+.team-subheading {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3xl);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+.team-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: oklch(12% 0.012 25 / 0.7);
+  padding: var(--space-xl);
+}
+
+.team-name {
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1.2;
+  margin-bottom: var(--space-sm);
+}
+
+.team-role {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--red-light);
+  margin-bottom: var(--space-lg);
+}
+
+.team-bio {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.team-staff {
+  margin-top: var(--space-4xl);
+}
+
+.team-staff-heading {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: var(--space-xl);
+}
+
+.team-staff-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.team-staff-item {
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: oklch(12% 0.012 25 / 0.5);
+  padding: var(--space-lg);
+}
+
+.team-staff-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.team-staff-role {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
 .cta-section {
   padding: var(--section-pad) clamp(var(--space-lg), 5vw, var(--space-3xl));
   text-align: center;
@@ -1039,6 +1121,12 @@ img { display: block; max-width: 100%; }
     width: 100%;
     transform: none !important;
   }
+
+  .team-grid,
+  .team-staff-grid {
+    grid-template-columns: 1fr;
+  }
+
   .horizontal-panel {
     width: 100%;
     height: auto;
@@ -1083,6 +1171,7 @@ button:focus-visible {
     <li><a href="#about">About</a></li>
     <li><a href="#identity">Identity</a></li>
     <li><a href="#work">Work</a></li>
+    <li><a href="#team">Team</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -1094,6 +1183,7 @@ button:focus-visible {
   <a href="#about">About</a>
   <a href="#identity">Identity</a>
   <a href="#work">Work</a>
+  <a href="#team">Team</a>
   <a href="#contact">Contact</a>
 </div>
 
@@ -1376,6 +1466,68 @@ button:focus-visible {
       </div>
     </div>
     
+  </div>
+</section>
+
+<section class="section team" id="team">
+  <div class="section-inner">
+    <div class="section-label reveal">Meet the Team</div>
+    <h2 class="section-heading reveal" style="--d:1">THE PEOPLE BEHIND THE SPARK</h2>
+    <p class="team-subheading reveal" style="--d:2">The minds behind the agency</p>
+
+    <div class="team-grid">
+      <article class="team-card flame-hover-card reveal" style="--d:2">
+        <h3 class="team-name">Gerald M. Hiteroza</h3>
+        <p class="team-role">Managing Director / CEO</p>
+        <p class="team-bio">Gerald has been involved in communication, creative development, and organizational leadership, bringing together strategic thinking and creative direction in building SINDI Advertising. As Managing Director, he has helped shape SINDI's identity and direction, championing ideas that turn communication challenges into meaningful creative opportunities. He believes that the strongest work is not simply seen—it is remembered.</p>
+      </article>
+
+      <article class="team-card flame-hover-card reveal" style="--d:3">
+        <h3 class="team-name">Julian Reinier H. Godoy</h3>
+        <p class="team-role">Executive / Creative Director</p>
+        <p class="team-bio">Julian leads SINDI's creative direction, working across concepts, visual storytelling, and campaign development. With a strong interest in turning ideas into compelling communication, Julian works closely with the agency's creative team to develop work that is bold, relevant, and unexpected. At SINDI, Julian continues to push for ideas that challenge conventions while remaining grounded in purpose.</p>
+      </article>
+
+      <article class="team-card flame-hover-card reveal" style="--d:4">
+        <h3 class="team-name">Tricia S. Gayotin</h3>
+        <p class="team-role">Account Director</p>
+        <p class="team-bio">Tricia brings together client relationships, strategic thinking, and creative collaboration, working closely with brands to understand the challenges behind every brief. At SINDI, Tricia serves as the link between clients and the agency's creative teams, helping transform business needs into communication opportunities that make an impact.</p>
+      </article>
+    </div>
+
+    <div class="team-staff">
+      <h3 class="team-staff-heading reveal" style="--d:1">The people who bring the spark to life</h3>
+      <div class="team-staff-grid reveal" style="--d:2">
+        <article class="team-staff-item flame-hover-card">
+          <div class="team-staff-name">Alex Justine Hechanova</div>
+          <div class="team-staff-role">Brand &amp; Strategy Director</div>
+        </article>
+        <article class="team-staff-item flame-hover-card">
+          <div class="team-staff-name">Elain C. Goyo</div>
+          <div class="team-staff-role">Art Director</div>
+        </article>
+        <article class="team-staff-item flame-hover-card">
+          <div class="team-staff-name">Sophia Paula Izon</div>
+          <div class="team-staff-role">Copywriter / Creative Strategist</div>
+        </article>
+        <article class="team-staff-item flame-hover-card">
+          <div class="team-staff-name">May Ganados</div>
+          <div class="team-staff-role">Multimedia Producer</div>
+        </article>
+        <article class="team-staff-item flame-hover-card">
+          <div class="team-staff-name">Angela Frolles</div>
+          <div class="team-staff-role">Digital &amp; Social Media Strategist</div>
+        </article>
+        <article class="team-staff-item flame-hover-card">
+          <div class="team-staff-name">Ariane Joy C. Guerrero</div>
+          <div class="team-staff-role">Graphic / UI-UX Designer</div>
+        </article>
+        <article class="team-staff-item flame-hover-card">
+          <div class="team-staff-name">John Lloyd Gonzalo</div>
+          <div class="team-staff-role">Production &amp; Operations Manager</div>
+        </article>
+      </div>
+    </div>
   </div>
 </section>
 
