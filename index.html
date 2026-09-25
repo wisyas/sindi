@@ -743,6 +743,120 @@ img { display: block; max-width: 100%; }
 }
 
 /* ---------- AWARDS SECTION ---------- */
+.testimonials {
+  background: linear-gradient(160deg, oklch(22% 0.11 28 / 0.9) 0%, oklch(15% 0.08 28 / 0.94) 100%);
+  border-top: 1px solid oklch(35% 0.15 28 / 0.5);
+  border-bottom: 1px solid oklch(35% 0.15 28 / 0.5);
+}
+
+.testimonial-carousel {
+  position: relative;
+  margin-top: var(--space-2xl);
+}
+
+.testimonial-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.testimonial-track::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonial-card {
+  min-width: 100%;
+  scroll-snap-align: start;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: oklch(12% 0.03 28 / 0.4);
+  padding: var(--space-2xl);
+}
+
+.testimonial-kicker {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: oklch(90% 0.02 95);
+  margin-bottom: var(--space-lg);
+}
+
+.testimonial-quote {
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  line-height: 1.45;
+  margin-bottom: var(--space-xl);
+  color: var(--text-primary);
+}
+
+.testimonial-name {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  color: oklch(88% 0.16 95);
+}
+
+.testimonial-role {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: oklch(88% 0.16 95 / 0.82);
+  margin-top: var(--space-sm);
+}
+
+.testimonial-controls {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+  margin-top: var(--space-lg);
+}
+
+.testimonial-btn {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: var(--text-primary);
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.testimonial-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.about-visual-collage {
+  margin: var(--space-2xl) 0 var(--space-3xl);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.video-placeholder {
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  border-radius: 10px;
+  min-height: 180px;
+  background: oklch(14% 0.02 25 / 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--text-secondary);
+}
+
+.video-placeholder strong {
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-bottom: var(--space-sm);
+}
+
 .awards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -891,6 +1005,21 @@ img { display: block; max-width: 100%; }
   padding: var(--space-xl);
 }
 
+.team-photo-placeholder {
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  border-radius: 8px;
+  min-height: 180px;
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: oklch(14% 0.018 25 / 0.55);
+}
+
 .team-name {
   font-family: var(--display);
   font-size: clamp(1.35rem, 2vw, 1.75rem);
@@ -935,6 +1064,21 @@ img { display: block; max-width: 100%; }
   border-radius: 8px;
   background: oklch(12% 0.012 25 / 0.5);
   padding: var(--space-lg);
+}
+
+.staff-photo-placeholder {
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  min-height: 130px;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: oklch(14% 0.015 25 / 0.55);
 }
 
 .team-staff-name {
@@ -1127,6 +1271,10 @@ img { display: block; max-width: 100%; }
     grid-template-columns: 1fr;
   }
 
+  .about-visual-collage {
+    grid-template-columns: 1fr;
+  }
+
   .horizontal-panel {
     width: 100%;
     height: auto;
@@ -1233,6 +1381,21 @@ button:focus-visible {
     <p class="about-description reveal" style="--d:1">
       SINDI Advertising is a marketing agency from the Philippines which assists brands in developing distinct identities and in establishing enduring links with their intended audiences. Since the word 'sindi' means <strong>'to ignite'</strong>, we believe that excellent campaigns start with a spark. An idea that has the ability to capture attention and produce impact. We offer specialized services in the area of strategic campaign development, creative design, and complete communication solutions that are tailored to enhance your brand.
     </p>
+
+    <div class="about-visual-collage reveal" style="--d:2">
+      <div class="video-placeholder flame-hover-card">
+        <strong>Video Placeholder 01</strong>
+        Brand Story Clip
+      </div>
+      <div class="video-placeholder flame-hover-card">
+        <strong>Video Placeholder 02</strong>
+        Office Life Montage
+      </div>
+      <div class="video-placeholder flame-hover-card">
+        <strong>Video Placeholder 03</strong>
+        Campaign Highlights
+      </div>
+    </div>
 
     <div class="section-label reveal" style="margin-top: var(--space-4xl);">Our Story</div>
     <div class="vm-grid" style="margin-bottom: var(--space-4xl);">
@@ -1378,6 +1541,64 @@ button:focus-visible {
   </div>
 </div>
 
+<section class="section testimonials" aria-label="What people say about us" style="padding-top: var(--space-4xl); padding-bottom: var(--space-4xl);">
+  <div class="section-inner">
+    <div class="section-label reveal">Voices</div>
+    <h2 class="section-heading reveal" style="--d:1">What people say about us</h2>
+
+    <div class="testimonial-carousel reveal" style="--d:2">
+      <div class="testimonial-track" id="testimonial-track">
+        <article class="testimonial-card">
+          <p class="testimonial-kicker">What people say about us</p>
+          <p class="testimonial-quote">"They really listened to the story behind our brand and brought it to life in a creative way. That's why the final ad wasn't just aesthetically pleasing, it actually felt like us."</p>
+          <h3 class="testimonial-name">Alden Richards</h3>
+          <p class="testimonial-role">CEO &amp; Celebrity</p>
+        </article>
+        <article class="testimonial-card">
+          <p class="testimonial-kicker">What people say about us</p>
+          <p class="testimonial-quote">"I love how SINDI breaks the norms and turns stories into something new and different. That's what really caught the audience's attention."</p>
+          <h3 class="testimonial-name">Anne Curtis-Smith</h3>
+          <p class="testimonial-role">CEO &amp; Celebrity</p>
+        </article>
+        <article class="testimonial-card">
+          <p class="testimonial-kicker">What people say about us</p>
+          <p class="testimonial-quote">"Their work is truly exceptional. Every piece they create has a personality of its own."</p>
+          <h3 class="testimonial-name">Bella Padilla</h3>
+          <p class="testimonial-role">Director &amp; Celebrity</p>
+        </article>
+        <article class="testimonial-card">
+          <p class="testimonial-kicker">What people say about us</p>
+          <p class="testimonial-quote">"I was honestly surprised by the final result. Sabi ko 'Wow, kakaiba tlaga ang mga Gen Z' Their imagination is truly somethihng else."</p>
+          <h3 class="testimonial-name">Jon Moll</h3>
+          <p class="testimonial-role">Showtime Director</p>
+        </article>
+        <article class="testimonial-card">
+          <p class="testimonial-kicker">What people say about us</p>
+          <p class="testimonial-quote">"The message behind their work really stood out to us. It reminds people that even on a busy day, they can take a moment to relax, rest and keep going."</p>
+          <h3 class="testimonial-name">Mae Cruz-Alviar</h3>
+          <p class="testimonial-role">Blockbuster Star Cinema Director</p>
+        </article>
+        <article class="testimonial-card">
+          <p class="testimonial-kicker">What people say about us</p>
+          <p class="testimonial-quote">"The storytelling made the ads more meorable and intersting. It gave people a reaosn to pay attention and stay until the end."</p>
+          <h3 class="testimonial-name">Cathy Garcia-Sampana</h3>
+          <p class="testimonial-role">Highest-Grossing Filipino Film Director</p>
+        </article>
+        <article class="testimonial-card">
+          <p class="testimonial-kicker">What people say about us</p>
+          <p class="testimonial-quote">"We wanted the campaign to feel relatable, and 'Make Today's Yours did exactly that. It turned a simple cup of coffee into a small reminder it's okay to rest and focus on what matters."</p>
+          <h3 class="testimonial-name">Bea Alonzo</h3>
+          <p class="testimonial-role">CEO &amp; Celebrity</p>
+        </article>
+      </div>
+      <div class="testimonial-controls">
+        <button class="testimonial-btn" type="button" id="testimonial-prev" aria-label="Previous testimonial">&#8592;</button>
+        <button class="testimonial-btn" type="button" id="testimonial-next" aria-label="Next testimonial">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- VERTICAL SCROLL: AWARDS SECTION -->
 <section class="section awards" id="awards" style="padding-top: var(--space-4xl);">
   <div class="section-inner">
@@ -1477,18 +1698,21 @@ button:focus-visible {
 
     <div class="team-grid">
       <article class="team-card flame-hover-card reveal" style="--d:2">
+        <div class="team-photo-placeholder">Image Placeholder</div>
         <h3 class="team-name">Gerald M. Hiteroza</h3>
         <p class="team-role">Managing Director / CEO</p>
         <p class="team-bio">Gerald has been involved in communication, creative development, and organizational leadership, bringing together strategic thinking and creative direction in building SINDI Advertising. As Managing Director, he has helped shape SINDI's identity and direction, championing ideas that turn communication challenges into meaningful creative opportunities. He believes that the strongest work is not simply seen—it is remembered.</p>
       </article>
 
       <article class="team-card flame-hover-card reveal" style="--d:3">
+        <div class="team-photo-placeholder">Image Placeholder</div>
         <h3 class="team-name">Julian Reinier H. Godoy</h3>
         <p class="team-role">Executive / Creative Director</p>
         <p class="team-bio">Julian leads SINDI's creative direction, working across concepts, visual storytelling, and campaign development. With a strong interest in turning ideas into compelling communication, Julian works closely with the agency's creative team to develop work that is bold, relevant, and unexpected. At SINDI, Julian continues to push for ideas that challenge conventions while remaining grounded in purpose.</p>
       </article>
 
       <article class="team-card flame-hover-card reveal" style="--d:4">
+        <div class="team-photo-placeholder">Image Placeholder</div>
         <h3 class="team-name">Tricia S. Gayotin</h3>
         <p class="team-role">Account Director</p>
         <p class="team-bio">Tricia brings together client relationships, strategic thinking, and creative collaboration, working closely with brands to understand the challenges behind every brief. At SINDI, Tricia serves as the link between clients and the agency's creative teams, helping transform business needs into communication opportunities that make an impact.</p>
@@ -1499,30 +1723,37 @@ button:focus-visible {
       <h3 class="team-staff-heading reveal" style="--d:1">The people who bring the spark to life</h3>
       <div class="team-staff-grid reveal" style="--d:2">
         <article class="team-staff-item flame-hover-card">
+          <div class="staff-photo-placeholder">Image Placeholder</div>
           <div class="team-staff-name">Alex Justine Hechanova</div>
           <div class="team-staff-role">Brand &amp; Strategy Director</div>
         </article>
         <article class="team-staff-item flame-hover-card">
+          <div class="staff-photo-placeholder">Image Placeholder</div>
           <div class="team-staff-name">Elain C. Goyo</div>
           <div class="team-staff-role">Art Director</div>
         </article>
         <article class="team-staff-item flame-hover-card">
+          <div class="staff-photo-placeholder">Image Placeholder</div>
           <div class="team-staff-name">Sophia Paula Izon</div>
           <div class="team-staff-role">Copywriter / Creative Strategist</div>
         </article>
         <article class="team-staff-item flame-hover-card">
+          <div class="staff-photo-placeholder">Image Placeholder</div>
           <div class="team-staff-name">May Ganados</div>
           <div class="team-staff-role">Multimedia Producer</div>
         </article>
         <article class="team-staff-item flame-hover-card">
+          <div class="staff-photo-placeholder">Image Placeholder</div>
           <div class="team-staff-name">Angela Frolles</div>
           <div class="team-staff-role">Digital &amp; Social Media Strategist</div>
         </article>
         <article class="team-staff-item flame-hover-card">
+          <div class="staff-photo-placeholder">Image Placeholder</div>
           <div class="team-staff-name">Ariane Joy C. Guerrero</div>
           <div class="team-staff-role">Graphic / UI-UX Designer</div>
         </article>
         <article class="team-staff-item flame-hover-card">
+          <div class="staff-photo-placeholder">Image Placeholder</div>
           <div class="team-staff-name">John Lloyd Gonzalo</div>
           <div class="team-staff-role">Production &amp; Operations Manager</div>
         </article>
@@ -1683,6 +1914,22 @@ function updateHorizontalScroll() {
 window.addEventListener('scroll', updateHorizontalScroll, { passive: true });
 window.addEventListener('resize', updateHorizontalScroll);
 updateHorizontalScroll();
+
+const testimonialTrack = document.querySelector('#testimonial-track');
+const testimonialPrev = document.querySelector('#testimonial-prev');
+const testimonialNext = document.querySelector('#testimonial-next');
+
+if (testimonialTrack && testimonialPrev && testimonialNext) {
+  const scrollByCard = (direction) => {
+    testimonialTrack.scrollBy({
+      left: direction * testimonialTrack.clientWidth,
+      behavior: 'smooth'
+    });
+  };
+
+  testimonialPrev.addEventListener('click', () => scrollByCard(-1));
+  testimonialNext.addEventListener('click', () => scrollByCard(1));
+}
 </script>
 </body>
 </html>
