@@ -900,15 +900,16 @@ img { display: block; max-width: 100%; }
 
 .brand-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   max-width: 760px;
   margin-inline: 0;
-  gap: var(--space-md);
+  gap: var(--space-lg);
+  align-items: stretch;
 }
 
 .brand-tile {
-  min-height: 92px;
-  padding: var(--space-sm);
+  min-height: 106px;
+  padding: var(--space-md);
   background: transparent;
   display: grid;
   place-items: center;
@@ -921,8 +922,8 @@ img { display: block; max-width: 100%; }
 }
 
 .brand-tile-logo {
-  width: min(82%, 170px);
-  max-height: 68px;
+  width: min(90%, 188px);
+  max-height: 80px;
   object-fit: contain;
   display: block;
   position: relative;
@@ -958,9 +959,22 @@ img { display: block; max-width: 100%; }
   display: none;
 }
 
+@media (max-width: 920px) {
+  .brand-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 520px) {
   .brand-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .brand-grid .brand-tile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 220px);
   }
 }
 
