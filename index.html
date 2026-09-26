@@ -549,6 +549,20 @@ img { display: block; max-width: 100%; }
   max-width: 48ch;
 }
 
+.about-story-label {
+  text-align: center;
+}
+
+.about-story-grid .vm-item,
+.about-stats-grid .vm-item {
+  text-align: center;
+}
+
+.about-story-grid .vm-text,
+.about-stats-grid .vm-text {
+  margin-inline: auto;
+}
+
 /* ---------- HORIZONTAL SCROLL TRACK STYLES ---------- */
 .horizontal-scroll-section {
   position: relative;
@@ -873,18 +887,23 @@ img { display: block; max-width: 100%; }
 
 .brand-showcase {
   margin-top: var(--space-3xl);
+  text-align: center;
 }
 
 .brand-showcase-intro {
   margin-top: var(--space-md);
   margin-bottom: var(--space-xl);
   max-width: 64ch;
+  margin-inline: auto;
   color: var(--text-secondary);
 }
 
 .brand-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  max-width: 760px;
+  margin-inline: auto;
+  justify-content: center;
   gap: var(--space-md);
 }
 
@@ -892,16 +911,28 @@ img { display: block; max-width: 100%; }
   position: relative;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
-  border: 0;
-  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(circle at 18% 20%, color-mix(in oklch, var(--tile-accent) 24%, transparent), transparent 58%),
+    linear-gradient(150deg, oklch(14% 0.016 25 / 0.9), oklch(10% 0.012 25 / 0.85));
   overflow: hidden;
   display: grid;
   place-items: center;
-  transition: transform 0.35s var(--ease-out-expo);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition:
+    transform 0.35s var(--ease-out-expo),
+    border-color 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo);
 }
 
-.brand-tile:hover {
+.brand-tile:hover,
+.brand-tile:focus-visible {
   transform: translateY(-4px);
+  border-color: color-mix(in oklch, var(--tile-accent) 72%, white 10%);
+  box-shadow:
+    0 12px 26px oklch(0% 0 0 / 0.35),
+    0 0 26px color-mix(in oklch, var(--tile-accent) 34%, transparent),
+    inset 0 0 0 1px color-mix(in oklch, var(--tile-accent) 48%, transparent);
 }
 
 .brand-tile-logo {
@@ -942,21 +973,9 @@ img { display: block; max-width: 100%; }
   display: none;
 }
 
-@media (max-width: 1023px) {
-  .brand-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
+@media (max-width: 520px) {
   .brand-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 460px) {
-  .brand-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -965,7 +984,8 @@ img { display: block; max-width: 100%; }
     transition: none;
   }
 
-  .brand-tile:hover {
+  .brand-tile:hover,
+  .brand-tile:focus-visible {
     transform: none;
   }
 }
@@ -1398,8 +1418,7 @@ button:focus-visible {
 
 .about-visual-collage {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-flow: row dense;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-md);
 }
 
@@ -1414,12 +1433,12 @@ button:focus-visible {
 }
 
 .about-visual-collage .media-card--rectangle {
-  grid-column: span 5;
+  grid-column: span 1;
   aspect-ratio: 16 / 10;
 }
 
 .about-visual-collage .media-card--square {
-  grid-column: span 2;
+  grid-column: span 1;
   aspect-ratio: 1 / 1;
 }
 
@@ -1488,15 +1507,7 @@ button:focus-visible {
 
 @media (max-width: 1023px) {
   .about-visual-collage {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .about-visual-collage .media-card--rectangle {
-    grid-column: span 4;
-  }
-
-  .about-visual-collage .media-card--square {
-    grid-column: span 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1607,8 +1618,8 @@ button:focus-visible {
 </div>
 
 
-    <div class="section-label reveal" style="margin-top: var(--space-4xl);">Our Story</div>
-    <div class="vm-grid" style="margin-bottom: var(--space-4xl);">
+    <div class="section-label reveal about-story-label" style="margin-top: var(--space-4xl);">Our Story</div>
+    <div class="vm-grid about-story-grid" style="margin-bottom: var(--space-4xl);">
       <div class="vm-item reveal" style="--d:2">
         <div class="vm-number">2018</div>
         <div class="vm-title">The Humble Beginning</div>
@@ -1639,8 +1650,8 @@ button:focus-visible {
       </div>
     </div>
 
-    <div class="section-label reveal">By The Numbers</div>
-    <div class="vm-grid">
+    <div class="section-label reveal about-story-label">By The Numbers</div>
+    <div class="vm-grid about-stats-grid">
       <div class="vm-item reveal" style="--d:2">
         <div class="vm-number" style="font-size: clamp(2rem, 3.5vw, 3rem);">8+</div>
         <div class="vm-title">Years of Excellence</div>
@@ -2157,53 +2168,35 @@ if (aboutCollageContainer) {
   // Replace media URLs below with your own local files (for example: "assets/videos/brand-story.mp4").
   const aboutCollageMedia = [
     {
-      type: 'image',
-      size: 'rectangle',
-      src: 'luna-billboard.jpg',
-      alt: 'Outdoor billboard visual from a SINDI campaign launch.',
-      title: 'Billboard Reveal',
-      label: 'Photography'
-    },
-    {
       type: 'video',
-      size: 'square',
-      src: '',
-      poster: 'luna-social.jpg',
-      title: 'Studio Reel',
-      label: 'Video Placeholder',
-      fallback: 'Add your MP4/WebM file path in the aboutCollageMedia config.'
-    },
-    {
-      type: 'image',
       size: 'rectangle',
-      src: 'luna-left-panel.jpg',
-      alt: 'Campaign identity panel featuring SINDI branding work.',
-      title: 'Identity Build',
-      label: 'Photography'
-    },
-    {
-      type: 'image',
-      size: 'square',
-      src: 'luna-packaging.jpg',
-      alt: 'Packaging design concept developed for a partner brand.',
-      title: 'Packaging Study',
-      label: 'Photography'
+      src: 'maja1.mp4',
+      poster: 'image1.jpg',
+      title: 'Maja Campaign Motion',
+      label: 'Video'
     },
     {
       type: 'video',
       size: 'rectangle',
-      src: '',
-      poster: 'luna-poster.jpg',
-      title: 'Campaign Motion',
-      label: 'Video Placeholder',
-      fallback: 'Set src to your video URL, then keep poster for fallback/preview.'
+      src: 'sunsilk1.mp4',
+      poster: 'image2.jpg',
+      title: 'Sunsilk Campaign Motion',
+      label: 'Video'
     },
     {
       type: 'image',
       size: 'rectangle',
-      src: 'luna-social.jpg',
-      alt: 'Editorial collage still for a SINDI partner social campaign.',
-      title: 'Editorial Frame',
+      src: 'image1.jpg',
+      alt: 'Editorial still from a SINDI campaign photoshoot.',
+      title: 'Editorial Still 01',
+      label: 'Photography'
+    },
+    {
+      type: 'image',
+      size: 'rectangle',
+      src: 'image2.jpg',
+      alt: 'Editorial still from a SINDI campaign portrait series.',
+      title: 'Editorial Still 02',
       label: 'Photography'
     }
   ];
@@ -2298,6 +2291,7 @@ if (brandGrid) {
     tile.className = 'brand-tile';
     tile.setAttribute('role', 'img');
     tile.setAttribute('aria-label', `${brand.name} logo`);
+    tile.tabIndex = 0;
     tile.style.setProperty('--tile-accent', brand.accent);
     tile.style.setProperty('--tile-rotation', `${index % 3 === 1 ? '-5deg' : index % 3 === 2 ? '4deg' : '0deg'}`);
 
