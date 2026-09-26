@@ -918,12 +918,23 @@ img { display: block; max-width: 100%; }
   border-color: color-mix(in oklch, var(--tile-accent) 60%, rgba(255, 255, 255, 0.26));
 }
 
+.brand-tile-logo {
+  width: min(68%, 170px);
+  max-height: 46%;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
 .brand-tile-mark {
   font-family: var(--display);
   font-size: clamp(1.35rem, 2.8vw, 2.2rem);
   letter-spacing: 0.06em;
   color: var(--text-primary);
   text-transform: uppercase;
+  position: relative;
+  z-index: 1;
 }
 
 .brand-tile-label {
@@ -938,6 +949,11 @@ img { display: block; max-width: 100%; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.brand-tile--has-logo .brand-tile-mark,
+.brand-tile--has-logo .brand-tile-label {
+  display: none;
 }
 
 @media (max-width: 1023px) {
@@ -1853,7 +1869,7 @@ button:focus-visible {
       <p class="brand-showcase-intro">
         Placeholder squares for partner logos. Replace each tile with a local square brand asset when final files are ready.
       </p>
-      <div class="brand-grid" id="brand-grid" aria-label="Brand logo placeholder grid"></div>
+      <div class="brand-grid" id="brand-grid" aria-label="Brand logo grid"></div>
     </section>
   </div>
 </section>
@@ -2280,26 +2296,40 @@ const brandGrid = document.querySelector('#brand-grid');
 
 if (brandGrid) {
   const brandShowcaseItems = [
-    { name: 'Aster Foods', mark: 'AF', accent: '#f06f3b' },
-    { name: 'Northline Hotels', mark: 'NH', accent: '#ed5b2f' },
-    { name: 'Krypton Wear', mark: 'KW', accent: '#d94e38' },
-    { name: 'Luma Beauty', mark: 'LB', accent: '#f08b55' },
-    { name: 'Golden Harvest', mark: 'GH', accent: '#c94a2f' },
-    { name: 'MetroLink Mobility', mark: 'MM', accent: '#b93a3a' },
-    { name: 'Casa Verde', mark: 'CV', accent: '#f07045' },
-    { name: 'Prime Atlas', mark: 'PA', accent: '#d74f34' },
-    { name: 'Solis Fitness', mark: 'SF', accent: '#f47d4a' },
-    { name: 'Harbor Labs', mark: 'HL', accent: '#ba3d31' },
-    { name: 'Vanta Studio', mark: 'VS', accent: '#f05d35' }
+    { name: 'GCash', mark: 'AF', accent: '#f06f3b', logo: 'gcash.png' },
+    { name: 'Penshoppe', mark: 'NH', accent: '#ed5b2f', logo: 'penshoppe.png' },
+    { name: 'adidas', mark: 'KW', accent: '#d94e38', logo: 'adidas.png' },
+    { name: 'FedEx', mark: 'LB', accent: '#f08b55', logo: 'fedex.png' },
+    { name: 'Honda', mark: 'GH', accent: '#c94a2f', logo: 'honda.png' },
+    { name: 'HP', mark: 'MM', accent: '#b93a3a', logo: 'hp.png' },
+    { name: 'APEX Digital', mark: 'CV', accent: '#f07045', logo: 'apex-digital.png' },
+    { name: 'nutella', mark: 'PA', accent: '#d74f34', logo: 'nutella.png' },
+    { name: 'P&G', mark: 'SF', accent: '#f47d4a', logo: 'p-and-g.png' },
+    { name: 'Shell', mark: 'HL', accent: '#ba3d31', logo: 'shell.png' },
+    { name: 'Uniliver', mark: 'VS', accent: '#f05d35', logo: 'uniliver.png' }
   ];
 
   brandShowcaseItems.forEach((brand, index) => {
     const tile = document.createElement('article');
     tile.className = 'brand-tile';
     tile.setAttribute('role', 'img');
-    tile.setAttribute('aria-label', `${brand.name} logo placeholder`);
+    tile.setAttribute('aria-label', `${brand.name} logo`);
     tile.style.setProperty('--tile-accent', brand.accent);
     tile.style.setProperty('--tile-rotation', `${index % 3 === 1 ? '-5deg' : index % 3 === 2 ? '4deg' : '0deg'}`);
+
+    const logo = document.createElement('img');
+    logo.className = 'brand-tile-logo';
+    logo.src = brand.logo;
+    logo.alt = '';
+    logo.loading = 'lazy';
+    logo.decoding = 'async';
+    logo.setAttribute('aria-hidden', 'true');
+    logo.addEventListener('load', () => {
+      tile.classList.add('brand-tile--has-logo');
+    });
+    logo.addEventListener('error', () => {
+      tile.classList.remove('brand-tile--has-logo');
+    });
 
     const mark = document.createElement('span');
     mark.className = 'brand-tile-mark';
@@ -2311,7 +2341,7 @@ if (brandGrid) {
     label.setAttribute('aria-hidden', 'true');
     label.textContent = brand.name;
 
-    tile.append(mark, label);
+    tile.append(logo, mark, label);
     brandGrid.appendChild(tile);
   });
 }
