@@ -927,33 +927,15 @@ img { display: block; max-width: 100%; }
   z-index: 1;
 }
 
-.brand-tile-mark {
-  font-family: var(--display);
-  font-size: clamp(1.35rem, 2.8vw, 2.2rem);
-  letter-spacing: 0.06em;
-  color: var(--text-primary);
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
-}
-
-.brand-tile-label {
+.brand-tile--logo-missing::after {
+  content: "";
   position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  font-size: 0.64rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.brand-tile--has-logo .brand-tile-mark,
-.brand-tile--has-logo .brand-tile-label {
-  display: none;
+  width: 42%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 2px solid color-mix(in oklch, var(--tile-accent) 60%, rgba(255, 255, 255, 0.45));
+  box-shadow: inset 0 0 0 6px color-mix(in oklch, var(--tile-accent) 45%, transparent);
+  z-index: 1;
 }
 
 @media (max-width: 1023px) {
@@ -1863,12 +1845,7 @@ button:focus-visible {
       </div>
     </div>
 
-    <section class="brand-showcase reveal" style="--d:3" aria-labelledby="brands-heading">
-      <div class="section-label">Brand Showcase</div>
-      <h3 class="section-heading" id="brands-heading">11 Partner Brands</h3>
-      <p class="brand-showcase-intro">
-        Placeholder squares for partner logos. Replace each tile with a local square brand asset when final files are ready.
-      </p>
+    <section class="brand-showcase reveal" style="--d:3" aria-label="Partner brand logos">
       <div class="brand-grid" id="brand-grid" aria-label="Brand logo grid"></div>
     </section>
   </div>
@@ -2328,20 +2305,12 @@ if (brandGrid) {
       tile.classList.add('brand-tile--has-logo');
     });
     logo.addEventListener('error', () => {
+      logo.removeAttribute('src');
       tile.classList.remove('brand-tile--has-logo');
+      tile.classList.add('brand-tile--logo-missing');
     });
 
-    const mark = document.createElement('span');
-    mark.className = 'brand-tile-mark';
-    mark.setAttribute('aria-hidden', 'true');
-    mark.textContent = brand.mark;
-
-    const label = document.createElement('span');
-    label.className = 'brand-tile-label';
-    label.setAttribute('aria-hidden', 'true');
-    label.textContent = brand.name;
-
-    tile.append(logo, mark, label);
+    tile.append(logo);
     brandGrid.appendChild(tile);
   });
 }
