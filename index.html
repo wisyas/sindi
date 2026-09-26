@@ -828,111 +828,149 @@ img { display: block; max-width: 100%; }
   background: rgba(255, 255, 255, 0.08);
 }
 
-.awards-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-  margin-top: var(--space-2xl);
-  align-items: center;
+.awards {
+  background: linear-gradient(180deg, oklch(11% 0.012 25) 0%, oklch(9% 0.02 35) 100%);
 }
 
-@media (min-width: 768px) {
+.awards .section-label,
+.awards .section-heading {
+  text-align: center;
+}
+
+.awards .section-label {
+  color: oklch(72% 0.09 65);
+  margin-bottom: var(--space-md);
+}
+
+.awards .section-heading {
+  margin-bottom: var(--space-2xl);
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.award-item {
+  border-radius: 14px;
+  border: 1px solid oklch(42% 0.03 45 / 0.4);
+  background: linear-gradient(170deg, oklch(14% 0.028 40 / 0.7), oklch(10% 0.015 28 / 0.95));
+  padding: clamp(1rem, 2.4vw, 1.35rem);
+  min-height: 148px;
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-sm);
+  transition: border-color 0.35s ease, transform 0.35s ease, background-color 0.35s ease;
+}
+
+.award-item:hover {
+  border-color: oklch(70% 0.11 65 / 0.55);
+  transform: translateY(-2px);
+}
+
+.award-org {
+  color: oklch(74% 0.11 65);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.award-name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.1;
+}
+
+.award-note {
+  color: oklch(80% 0.02 45 / 0.82);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 700px) {
   .awards-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
   .awards-grid {
-    grid-template-columns: repeat(5, 1fr); 
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
-}
-
-.award-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-lg);
-  min-height: 160px;
-  overflow: hidden;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: oklch(12% 0.012 25 / 0.5);
-  cursor: pointer;
-}
-
-.award-item img {
-  max-width: 100%;
-  max-height: 110px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
 }
 
 .brand-showcase {
   margin-top: var(--space-3xl);
 }
 
-.brand-showcase-intro {
-  margin-top: var(--space-md);
+.brand-showcase-header {
+  text-align: center;
   margin-bottom: var(--space-xl);
-  max-width: 64ch;
-  color: var(--text-secondary);
+}
+
+.brand-showcase-heading {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 4.3vw, 3rem);
+  line-height: 1.05;
 }
 
 .brand-grid {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(0.85rem, 1.8vw, 1.35rem);
+  padding: 0;
 }
 
 .brand-tile {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(9, 9, 9, 0.6);
+  border-radius: 14px;
   display: grid;
   place-items: center;
+  padding: var(--space-md);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+  outline: none;
 }
 
-.brand-tile-logo {
-  width: min(68%, 170px);
-  max-height: 46%;
-  object-fit: contain;
-  display: block;
-  position: relative;
-  z-index: 1;
+.brand-mark {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ededed;
+  filter: grayscale(1) contrast(0.75);
+  opacity: 0.86;
+  transition: color 0.35s ease, filter 0.35s ease, opacity 0.35s ease, transform 0.35s ease, text-shadow 0.35s ease;
 }
 
-.brand-tile--logo-missing::after {
-  content: "";
-  position: absolute;
-  width: 42%;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  border: 2px solid color-mix(in oklch, var(--tile-accent) 60%, rgba(255, 255, 255, 0.45));
-  box-shadow: inset 0 0 0 6px color-mix(in oklch, var(--tile-accent) 45%, transparent);
-  z-index: 1;
+.brand-tile:hover,
+.brand-tile:focus-visible {
+  border-color: color-mix(in oklch, var(--brand-color) 58%, rgba(255, 255, 255, 0.4));
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--brand-color) 45%, transparent);
+  transform: translateY(-2px);
 }
 
-@media (max-width: 1023px) {
-  .brand-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+.brand-tile:hover .brand-mark,
+.brand-tile:focus-visible .brand-mark {
+  color: var(--brand-color);
+  filter: grayscale(0) contrast(1);
+  opacity: 1;
+  transform: scale(1.04);
+  text-shadow: 0 0 18px color-mix(in oklch, var(--brand-color) 55%, transparent);
 }
 
-@media (max-width: 700px) {
-  .brand-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 460px) {
-  .brand-grid {
-    grid-template-columns: 1fr;
-  }
-}
+.brand-mark--netflix { font-size: 1.15rem; letter-spacing: 0.14em; }
+.brand-mark--grab { font-size: 1.35rem; font-style: italic; letter-spacing: 0.02em; }
+.brand-mark--rccola { font-size: 1rem; letter-spacing: 0.08em; }
+.brand-mark--oreo { font-size: 1.25rem; letter-spacing: 0.09em; }
+.brand-mark--jollibee { font-size: 1rem; letter-spacing: 0.07em; }
+.brand-mark--pg { font-size: 1.55rem; letter-spacing: 0.02em; }
+.brand-mark--seven { font-size: 1.05rem; letter-spacing: 0.08em; }
+.brand-mark--gcash { font-size: 1.2rem; letter-spacing: 0.08em; }
+.brand-mark--pldt { font-size: 1.35rem; letter-spacing: 0.07em; }
+.brand-mark--vivo { font-size: 1.5rem; letter-spacing: 0.03em; text-transform: lowercase; }
+.brand-mark--levis { font-size: 1.2rem; letter-spacing: 0.1em; }
 
 /* ---------- LUNA COFFEE CAMPAIGN GRID ---------- */
 .hollow-title {
@@ -1485,6 +1523,21 @@ button:focus-visible {
   .about-visual-collage .media-card:hover video {
     transform: none;
   }
+
+  .award-item,
+  .brand-tile,
+  .brand-mark {
+    transition: none;
+  }
+
+  .award-item:hover,
+  .brand-tile:hover,
+  .brand-tile:focus-visible,
+  .brand-tile:hover .brand-mark,
+  .brand-tile:focus-visible .brand-mark {
+    transform: none;
+    text-shadow: none;
+  }
 }
 </style>
 </head>
@@ -1777,44 +1830,80 @@ button:focus-visible {
 <!-- VERTICAL SCROLL: AWARDS SECTION -->
 <section class="section awards" id="awards" style="padding-top: var(--space-4xl);">
   <div class="section-inner">
-    <div class="section-label reveal">Recognitions</div>
+    <div class="section-label reveal">RECOGNITIONS</div>
     <h2 class="section-heading reveal" style="--d:1">Awards & Accolades</h2>
     
     <div class="awards-grid reveal" style="--d:2">
-      <div class="award-item flame-hover-card">
-        <img src="award-1.png" alt="Award 1">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-2.png" alt="Award 2">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-3.png" alt="Award 3">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-4.png" alt="Award 4">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-5.png" alt="Award 5">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-6.png" alt="Award 6">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-7.png" alt="Award 7">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-8.png" alt="Award 8">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-9.png" alt="Award 9">
-      </div>
-      <div class="award-item flame-hover-card">
-        <img src="award-10.png" alt="Award 10">
-      </div>
+      <article class="award-item">
+        <p class="award-org">Global Creative</p>
+        <h3 class="award-name">The Clio Awards</h3>
+        <p class="award-note">Gold Winner — Brand Film</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">International Festival</p>
+        <h3 class="award-name">Cannes Lions</h3>
+        <p class="award-note">Shortlist — Film Craft</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">Digital Excellence</p>
+        <h3 class="award-name">Webby Awards</h3>
+        <p class="award-note">Honoree — Branded Content</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">Marketing Effectiveness</p>
+        <h3 class="award-name">Effie Awards</h3>
+        <p class="award-note">Silver — Youth Campaign</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">AAF Competition</p>
+        <h3 class="award-name">ADDY Awards</h3>
+        <p class="award-note">District Gold — Integrated</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">Creative Leadership</p>
+        <h3 class="award-name">LIA Juror</h3>
+        <p class="award-note">Official Jury Appointment</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">Strategic Intelligence</p>
+        <h3 class="award-name">WARC Awards</h3>
+        <p class="award-note">Bronze — Channel Integration</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">Global One Club</p>
+        <h3 class="award-name">The One Show</h3>
+        <p class="award-note">Merit — Branded Utility</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">Asia-Pacific Festival</p>
+        <h3 class="award-name">Spikes Asia</h3>
+        <p class="award-note">Shortlist — Brand Experience</p>
+      </article>
+      <article class="award-item">
+        <p class="award-org">Design Benchmark</p>
+        <h3 class="award-name">D&AD Awards</h3>
+        <p class="award-note">Wood Pencil — Art Direction</p>
+      </article>
     </div>
 
     <section class="brand-showcase reveal" style="--d:3" aria-label="Partner brand logos">
-      <div class="brand-grid" id="brand-grid" aria-label="Brand logo grid"></div>
+      <header class="brand-showcase-header">
+        <div class="section-label">BRANDS</div>
+        <h3 class="brand-showcase-heading">Trusted by Leading Names</h3>
+      </header>
+      <ul class="brand-grid" aria-label="Brand logo grid">
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="Netflix logo" style="--brand-color:#E50914;"><span class="brand-mark brand-mark--netflix" aria-hidden="true">NETFLIX</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="Grab logo" style="--brand-color:#00B14F;"><span class="brand-mark brand-mark--grab" aria-hidden="true">Grab</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="RC Cola logo" style="--brand-color:#D71921;"><span class="brand-mark brand-mark--rccola" aria-hidden="true">RC COLA</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="Oreo logo" style="--brand-color:#0055B8;"><span class="brand-mark brand-mark--oreo" aria-hidden="true">OREO</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="Jollibee logo" style="--brand-color:#E31D1A;"><span class="brand-mark brand-mark--jollibee" aria-hidden="true">JOLLIBEE</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="P and G logo" style="--brand-color:#1445C0;"><span class="brand-mark brand-mark--pg" aria-hidden="true">P&amp;G</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="7-Eleven logo" style="--brand-color:#F36F21;"><span class="brand-mark brand-mark--seven" aria-hidden="true">7-ELEVEN</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="GCash logo" style="--brand-color:#0057FF;"><span class="brand-mark brand-mark--gcash" aria-hidden="true">GCash</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="PLDT logo" style="--brand-color:#F44336;"><span class="brand-mark brand-mark--pldt" aria-hidden="true">PLDT</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="Vivo logo" style="--brand-color:#436DFF;"><span class="brand-mark brand-mark--vivo" aria-hidden="true">vivo</span></article></li>
+        <li><article class="brand-tile" tabindex="0" role="img" aria-label="Levi's logo" style="--brand-color:#D6031C;"><span class="brand-mark brand-mark--levis" aria-hidden="true">LEVI'S</span></article></li>
+      </ul>
     </section>
   </div>
 </section>
@@ -2237,51 +2326,6 @@ if (aboutCollageContainer) {
   });
 }
 
-const brandGrid = document.querySelector('#brand-grid');
-
-if (brandGrid) {
-  const brandShowcaseItems = [
-    { name: 'GCash', mark: 'AF', accent: '#f06f3b', logo: 'gcash.png' },
-    { name: 'Penshoppe', mark: 'NH', accent: '#ed5b2f', logo: 'penshoppe.png' },
-    { name: 'adidas', mark: 'KW', accent: '#d94e38', logo: 'adidas.png' },
-    { name: 'FedEx', mark: 'LB', accent: '#f08b55', logo: 'fedex.png' },
-    { name: 'Honda', mark: 'GH', accent: '#c94a2f', logo: 'honda.png' },
-    { name: 'HP', mark: 'MM', accent: '#b93a3a', logo: 'hp.png' },
-    { name: 'APEX Digital', mark: 'CV', accent: '#f07045', logo: 'apex-digital.png' },
-    { name: 'nutella', mark: 'PA', accent: '#d74f34', logo: 'nutella.png' },
-    { name: 'P&G', mark: 'SF', accent: '#f47d4a', logo: 'p-and-g.png' },
-    { name: 'Shell', mark: 'HL', accent: '#ba3d31', logo: 'shell.png' },
-    { name: 'Uniliver', mark: 'VS', accent: '#f05d35', logo: 'uniliver.png' }
-  ];
-
-  brandShowcaseItems.forEach((brand, index) => {
-    const tile = document.createElement('article');
-    tile.className = 'brand-tile';
-    tile.setAttribute('role', 'img');
-    tile.setAttribute('aria-label', `${brand.name} logo`);
-    tile.style.setProperty('--tile-accent', brand.accent);
-    tile.style.setProperty('--tile-rotation', `${index % 3 === 1 ? '-5deg' : index % 3 === 2 ? '4deg' : '0deg'}`);
-
-    const logo = document.createElement('img');
-    logo.className = 'brand-tile-logo';
-    logo.src = brand.logo;
-    logo.alt = '';
-    logo.loading = 'lazy';
-    logo.decoding = 'async';
-    logo.setAttribute('aria-hidden', 'true');
-    logo.addEventListener('load', () => {
-      tile.classList.add('brand-tile--has-logo');
-    });
-    logo.addEventListener('error', () => {
-      logo.removeAttribute('src');
-      tile.classList.remove('brand-tile--has-logo');
-      tile.classList.add('brand-tile--logo-missing');
-    });
-
-    tile.append(logo);
-    brandGrid.appendChild(tile);
-  });
-}
 </script>
 </body>
 </html>
